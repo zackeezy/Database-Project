@@ -2,4 +2,5 @@ SELECT BudgetID, cp.BeginDate AS PeriodBegin, cp.EndDate AS PeriodEnd, tp.BeginD
 tp.OtherDirectCosts + tp.FnACosts + tp.SalariesWagesFringes AS TotalCost
  FROM Budget b
 JOIN BudgetPeriod cp ON cp.BudgetPeriodID = b.BudgetCurrentPeriodID
-JOIN BudgetPeriod tp ON tp.BudgetPeriodID = b.BudgetTotalProjPeriodID;
+JOIN BudgetPeriod tp ON tp.BudgetPeriodID = b.BudgetTotalProjPeriodID
+join Proposal p on p.BudgetID = b.BudgetID
