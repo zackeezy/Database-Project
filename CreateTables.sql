@@ -1,6 +1,5 @@
--- Zachary McKee and Brandon Emlaw
 
--- CREATE TABLES
+-- CREATETABLES.sql
 
 CREATE TABLE Signature (
     SignatureID int IDENTITY(1,1) PRIMARY KEY,

@@ -1,5 +1,11 @@
+—InsertData.sql
+--Remove Previous Data and Reset Auto Indexes
 
---Remove Data
+
+DELETE FROM InvestigatorAward;
+DELETE FROM InvestigatorProposal;
+DELETE FROM AWARD;
+DELETE FROM Proposal;
 DELETE FROM Signature;
 DELETE FROM Approval;
 DELETE FROM Budget;
@@ -24,6 +30,8 @@ DBCC CHECKIDENT ('BudgetPeriod', RESEED, 0);
 DBCC CHECKIDENT ('Budget', RESEED, 0);
 DBCC CHECKIDENT ('Approval', RESEED, 0);
 DBCC CHECKIDENT ('Signature', RESEED, 0);
+DBCC CHECKIDENT ('Proposal', RESEED, 0);
+DBCC CHECKIDENT ('Award', RESEED, 0);
 
 
 --PROPOSAL TYPES
@@ -225,16 +233,82 @@ VALUES
 ('Investigator Name', '1/2/2017'),
 ('Program Operator', '1/1/2017');
 
-Mike', 'James', 'Honors', 'Honors', 'james@harding.edu', 2/21/2006),
-('Dana', 'Steil', 'Science', 'Computer Science', 'dsteil@harding.edu', 5/10/2015),
-('Frank', 'McCown', 'Science', 'Computer Science', 'fmccown@harding.edu', 2/12/2014),
-('Ginger', 'Blackstone', 'Arts AND Humanities', 'Communication', 'gblackstone@harding.edu', 12/4/2016),
-('Brandon', 'Emlaw', 'Science', 'Computer Science', 'bemlaw@harding.edu', 1/10/2017),
-('Lance', 'Benson', 'Science', 'Chemistry', 'lbenson@harding.edu', 4/5/2016),
-('George', 'Washington', 'Arts AND Humanities', 'History', 'mrpresident@harding.edu', 5/5/2016),
-('Doc', 'Brown', 'Science', 'Engineering', 'outtatime@harding.edu', 10/20/2015),
-('Steve', 'Frye', 'Arts AND humanities', 'Theatre', 'sfrye@harding.edu', 5/7/2016),
-('Steve', 'Baber', 'Science', 'Computer Science', 'sbaber@harding.edu', 5/10/2016),
-('Gabriel', 'Foust', 'Science', 'Computer Science', 'gfoust@harding.edu', 2/1/2015),
-('Tim', 'Baird', 'Science
-INSERT INTO Proposal
+INSERT INTO Proposal(Title, ActivityType, BudgetID, ProposalTypeID, PreviousAwardID, SponsorID, PrimeSponsorID, CFDANumber, SubmissionMethod, DueDate, IRBAApprovalID, IACUCApprovalID, IBCApprovalID, IsIntellectualProperty, IsITAR, IsStemCell, IsStemCellApproved, IsOutsideStates, IsNSFAndStudents, IsNSFAndstudentsWillAbide, IsAgreedToGuidelines, IsFinancialConflictOfInterest, 
+PISignatureID, PIChairSignatureID, PIDeanSignatureID, COPISignatureID, COPIChairSignatureID, COPIDeanSignatureID, OfficeSignatureID, ProvostSignatureID)
+VALUES
+
+--Title, ActivityType, BudgetID, ProposalTypeID, 
+('State Police', 'Other', 1, 1,
+--PreviousAwardID, SponsorID, PrimeSponsorID, 
+ NULL, 5, NULL, 
+--CFDANumber, SubmissionMethod, DueDate
+ '1001', 'Paper', '2/2/2016', 
+--ApprovalIDS: 
+NULL, NULL, 2, 
+--ApprovalBits: 
+0, 0, 0, 0, 0, 0, 0, 0, 0, 
+--SIGNATURES: 
+4, 2, 1, 1, 1, 1, 9, 1),
+
+--Title, ActivityType, BudgetID, ProposalTypeID, 
+('History Research Program', 'Research', 2, 2,
+--PreviousAwardID, SponsorID, PrimeSponsorID, 
+ NULL, 2, NULL, 
+--CFDANumber, SubmissionMethod, DueDate
+ '200', 'Online', '2/7/2015', 
+--ApprovalIDS: 
+1, 3, NULL, 
+--ApprovalBits: 
+0, 0, 0, 0, 0, 0, 0, 0, 0, 
+--SIGNATURES: 
+2, 2, 1, 1, 1, 1, 9, 1),
+
+--Title, ActivityType, BudgetID, ProposalTypeID, 
+('NASA Study of Science', 'Research', 3, 1,
+--PreviousAwardID, SponsorID, PrimeSponsorID, 
+ NULL, 2, 3, 
+--CFDANumber, SubmissionMethod, DueDate
+ '200', 'Online', '4/5/2018', 
+--ApprovalIDS: 
+7, 4, 6, 
+--ApprovalBits: 
+0, 1, 0, 1, 0, 0, 0, 0, 0, 
+--SIGNATURES: 
+1, 2, 1, 1, 1, 1, 9, 1),
+
+--Title, ActivityType, BudgetID, ProposalTypeID, 
+('TV Station Upgrade', 'Equipment', 4, 3,
+--PreviousAwardID, SponsorID, PrimeSponsorID, 
+ NULL, 4, NULL, 
+--CFDANumber, SubmissionMethod, DueDate
+ '200', 'Online', '2/10/2016', 
+--ApprovalIDS: 
+1, 3, NULL, 
+--ApprovalBits: 
+0, 0, 0, 0, 0, 0, 0, 0, 0, 
+--SIGNATURES: 
+4, 2, 1, 1, 1, 1, 9, 1);
+
+
+
+INSERT INTO InvestigatorProposal(InvestigatorID, ProposalID, IsPrincipalInvestigator, FAndAPercentage)
+VALUES 
+(2, 1, 1, 48),
+(3, 1, 0, 48),
+(7, 2, 1, 48),
+(6, 3, 1, 48),
+(4, 4, 1, 48),
+(1, 4, 0, 48);
+
+
+--COPY AWARDS BY ID
+INSERT INTO Award(Title, ActivityType, ProposalTypeID, PreviousAwardID, SponsorID, PrimeSponsorID, CFDANumber, SubmissionMethod, OriginalProposalID, BudgetID)
+SELECT Title, ActivityType, ProposalTypeId, PreviousAwardID, SponsorID, PrimeSponsorID, CFDANumber, SubmissionMethod, ProposalID, BudgetID
+FROM Proposal
+WHERE ProposalID = 1 OR ProposalID = 3 OR ProposalID =4;
+
+--COPY INVESTIGATOR AWARDS BY ID
+INSERT INTO InvestigatorAward(InvestigatorID, AwardID, IsPrincipalInvestigator, FAndAPercentage)
+SELECT ip.InvestigatorID, a.AwardID, ip.IsPrincipalInvestigator, ip.FAndAPercentage
+FROM InvestigatorProposal ip
+JOIN Award a ON a.OriginalProposalID = ip.ProposalID;
