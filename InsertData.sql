@@ -1,5 +1,6 @@
 
 --Remove Data
+DELETE FROM Signature;
 DELETE FROM Approval;
 DELETE FROM Budget;
 DELETE FROM BudgetPeriod;
@@ -22,6 +23,7 @@ DBCC CHECKIDENT ('CostSharingSummary', RESEED, 0);
 DBCC CHECKIDENT ('BudgetPeriod', RESEED, 0);
 DBCC CHECKIDENT ('Budget', RESEED, 0);
 DBCC CHECKIDENT ('Approval', RESEED, 0);
+DBCC CHECKIDENT ('Signature', RESEED, 0);
 
 
 --PROPOSAL TYPES
@@ -201,5 +203,38 @@ VALUES
 (1, 2, 1),
 (5, 5, 4);
 
-INSERT INTO Approval
+INSERT INTO Approval(ProtocolNumber, IsSubmitted, DateOfApproval)
+VALUES
+('A100', 1, '1/1/2016'),
+('C200', 1, '1/1/2014'),
+('A205', 1, NULL),
+('A206', 1, NULL),
+('C405', 1, NULL),
+('A500', 0, NULL),
+('D101', 0, NULL);
 
+INSERT INTO Signature(Name, Date)
+VALUES
+('Bruce Mclarty', '1/1/2015'),
+('Tim Baird', '1/1/2016'),
+('Mike James', '1/7/2016'),
+('Dana Steil', '11/4/2015'),
+('Frank McCown', '11/1/2014'),
+('Steve Baber', '2/25/2017'),
+('Gabriel Foust', '2/4/2016'),
+('Investigator Name', '1/2/2017'),
+('Program Operator', '1/1/2017');
+
+Mike', 'James', 'Honors', 'Honors', 'james@harding.edu', 2/21/2006),
+('Dana', 'Steil', 'Science', 'Computer Science', 'dsteil@harding.edu', 5/10/2015),
+('Frank', 'McCown', 'Science', 'Computer Science', 'fmccown@harding.edu', 2/12/2014),
+('Ginger', 'Blackstone', 'Arts AND Humanities', 'Communication', 'gblackstone@harding.edu', 12/4/2016),
+('Brandon', 'Emlaw', 'Science', 'Computer Science', 'bemlaw@harding.edu', 1/10/2017),
+('Lance', 'Benson', 'Science', 'Chemistry', 'lbenson@harding.edu', 4/5/2016),
+('George', 'Washington', 'Arts AND Humanities', 'History', 'mrpresident@harding.edu', 5/5/2016),
+('Doc', 'Brown', 'Science', 'Engineering', 'outtatime@harding.edu', 10/20/2015),
+('Steve', 'Frye', 'Arts AND humanities', 'Theatre', 'sfrye@harding.edu', 5/7/2016),
+('Steve', 'Baber', 'Science', 'Computer Science', 'sbaber@harding.edu', 5/10/2016),
+('Gabriel', 'Foust', 'Science', 'Computer Science', 'gfoust@harding.edu', 2/1/2015),
+('Tim', 'Baird', 'Science
+INSERT INTO Proposal
