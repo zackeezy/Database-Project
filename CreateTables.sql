@@ -1,6 +1,5 @@
 -- Zachary McKee and Brandon Emlaw
 
-
 -- CREATE TABLES
 
 CREATE TABLE Signature (
@@ -45,8 +44,8 @@ CREATE TABLE Address (
 
 CREATE TABLE Sponsor (
     SponsorID int IDENTITY(1,1) PRIMARY KEY,
-    FirstName varchar(255) NOT NULL,
-    LastName varchar(255) NOT NULL,
+    Name varchar(255) NOT NULL,
+    ContactName varchar(255) NOT NULL,
     AddressID int FOREIGN KEY REFERENCES Address(AddressID),
     Email varchar(255)
 );
@@ -88,13 +87,13 @@ CREATE TABLE BudgetPeriod (
     BudgetPeriodID int IDENTITY(1,1) PRIMARY KEY,
     BeginDate datetime NOT NULL,
     EndDate datetime NOT NULL,
-    SallariesWagesFringes money NOT NULL DEFAULT 0,
+    SalariesWagesFringes money NOT NULL DEFAULT 0,
     OtherDirectCosts money NOT NULL DEFAULT 0,
     FnACosts money NOT NULL DEFAULT 0
 );
 
 CREATE TABLE Budget (
-    BudgetId int IDENTITY(1,1) PRIMARY KEY,
+    BudgetID int IDENTITY(1,1) PRIMARY KEY,
     BudgetCurrentPeriodID int NOT NULL FOREIGN KEY REFERENCES BudgetPeriod(BudgetPeriodID),
     BudgetTotalProjPeriodID int NOT NULL FOREIGN KEY REFERENCES BudgetPeriod(BudgetPeriodID),
     CostSharingSummaryID int NOT NULL FOREIGN KEY REFERENCES CostSharingSummary(CostSharingSummaryID)
@@ -169,3 +168,7 @@ CREATE TABLE InvestigatorAward (
     FAndAPercentage int NOT NULL,
     PRIMARY KEY (InvestigatorId, AwardID)
 );
+
+
+
+
